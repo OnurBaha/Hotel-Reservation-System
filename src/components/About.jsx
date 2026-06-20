@@ -16,7 +16,7 @@ function About() {
           Luxe Vista Resort, kurulduğu günden bu yana turizm ve otelcilik sektöründe "kişiselleştirilmiş lüks" standartlarını yeniden belirleme vizyonuyla hareket etmektedir. Akdeniz'in kalbinde yer alan resortumuz, doğanın el değmemiş dokusunu çağdaş mimari çizgiler ve kusursuz bir hizmet yaklaşımıyla birleştiriyor.
         </p>
         <p>
-          Amacımız, misafirlerimize yalnızca bir konaklama alanı sunmak değil, her anı özenle tasarlanmış benzersiz bir yaşam deneyimi sunmaktır. Alanında uzman şeflerimiz tarafından hazırlanan gastronomi harikalarından, tüm yorgunluğunuzu unutturacak spa merkezlerimize kadar her detay Elite konsept standartlarımıza göre optimize edilmiştir.
+          (Yeni)Amacımız, misafirlerimize yalnızca bir konaklama alanı sunmak değil, her anı özenle tasarlanmış benzersiz bir yaşam deneyimi sunmaktır. Alanında uzman şeflerimiz tarafından hazırlanan gastronomi harikalarından, tüm yorgunluğunuzu unutturacak spa merkezlerimize kadar her detay Elite konsept standartlarımıza göre optimize edilmiştir.
         </p>
         <div className="about-stats-grid">
           <div className="about-stat-item">
