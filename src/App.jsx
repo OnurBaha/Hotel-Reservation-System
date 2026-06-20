@@ -8,8 +8,9 @@ import Booking from "./components/Booking";
 import About from "./components/About";
 import LoginModal from "./components/LoginModal";
 import Footer from "./components/Footer";
+import { UserProvider } from "./context/authContext";
 
-function App() {
+function AppContent() {
   const [view, setView] = useState("home");
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
@@ -34,4 +35,10 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <UserProvider>
+      <AppContent />
+    </UserProvider>
+  );
+}
