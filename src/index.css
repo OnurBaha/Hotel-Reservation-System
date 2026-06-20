@@ -46,7 +46,7 @@ body {
 
 /* --- Hero & Arama Paneli --- */
 .hero-banner {
-  @apply relative h-[60vh] bg-cover bg-center flex items-center justify-center;
+  @apply relative h-[100vh] bg-cover bg-center flex items-center justify-center;
 }
 
 .hero-overlay {
@@ -581,4 +581,190 @@ body {
 
 .btn-search {
   @apply bg-[#8b5000] text-white px-8 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#ff9800] transition-colors whitespace-nowrap w-full md:w-auto cursor-pointer shadow-xs;
+}
+/* --- Hizmetlerimiz Bölümü --- */
+.services-section-wrapper {
+  @apply max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-12 gap-8 items-center;
+}
+
+.services-title-side {
+  @apply md:col-span-4 space-y-3 text-left;
+}
+
+.services-tag {
+  @apply text-xs font-bold uppercase tracking-widest text-[#8b5000] block;
+}
+
+.services-main-title {
+  @apply font-serif text-3xl md:text-4xl font-bold text-[#1b1c1c] tracking-wide uppercase;
+}
+
+.services-desc {
+  @apply text-sm text-[#554434] leading-relaxed font-light max-w-sm;
+}
+
+.services-grid-side {
+  @apply md:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-6;
+}
+
+/* Standart Hizmet Kartı */
+.service-item-card {
+  @apply bg-white p-6 rounded-xl border border-[#e9e8e7]/60 flex flex-col items-center justify-center text-center gap-3 transition-all duration-300 hover:shadow-xs;
+}
+
+.service-item-icon {
+  @apply text-2xl text-[#8b5000] h-8 flex items-center justify-center;
+}
+
+.service-item-name {
+  @apply font-serif text-sm font-medium text-[#1b1c1c] tracking-wide;
+}
+
+/* Görseldeki Öne Çıkan (Fiber İnternet) Kartı */
+.service-item-card-highlight {
+  @apply bg-[#bc9c6c] text-white p-6 rounded-xl flex flex-col items-center justify-center text-center gap-2 transition-all duration-300 shadow-md transform hover:-translate-y-0.5;
+}
+
+.service-item-icon-highlight {
+  @apply text-3xl text-white;
+}
+
+.service-item-name-highlight {
+  @apply font-serif text-base font-bold tracking-wide;
+}
+
+.service-item-sub-highlight {
+  @apply text-[11px] text-white/90 font-light leading-tight max-w-[140px];
+}
+
+/* --- Otel Tanıtım (About Highlight) Bölümü --- */
+.intro-section-wrapper {
+  @apply max-w-7xl mx-auto px-6 py-16 flex flex-col lg:flex-row items-center gap-12;
+}
+
+.intro-content-side {
+  @apply flex-1 space-y-6 text-left;
+}
+
+.intro-tag {
+  @apply text-xs font-bold uppercase tracking-widest text-[#8b5000] block;
+}
+
+.intro-title {
+  @apply font-serif text-3xl md:text-4xl font-bold text-[#1b1c1c] tracking-wide leading-tight;
+}
+
+.intro-desc {
+  @apply text-sm md:text-base text-[#554434] leading-relaxed font-light space-y-4;
+}
+
+.intro-image-side {
+  @apply flex-1 w-full;
+}
+
+.intro-img-wrapper {
+  @apply relative overflow-hidden rounded-2xl border border-[#e9e8e7] shadow-md aspect-video lg:aspect-[4/3];
+}
+
+.intro-img {
+  @apply w-full h-full object-cover transition-transform duration-700 hover:scale-105;
+}
+
+/* index.css */
+
+/* About Page Styles */
+
+/* Base Layout and Container for Hero with Overlay Content */
+.about-hero-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Set a substantial height for the hero view */
+  overflow: hidden;
+}
+
+.about-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Important for full bleed effect */
+  display: block;
+}
+
+.about-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Subtle dark overlay for text contrast */
+  display: flex;
+  align-items: center; /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
+  z-index: 1; /* Place above the image */
+}
+
+/* Redesigned Title Wrapper for Hero Context */
+.about-title-wrapper-hero {
+  text-align: center;
+  color: white; /* Contrast text against overlay */
+  margin-top: -50px; /* Adjust vertical position */
+}
+
+.about-tag {
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #c9b3a4; /* Subdued secondary color */
+}
+
+.about-title-hero {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.about-decorator {
+  width: 50px;
+  height: 3px;
+  background-color: #8b5000; /* Rich gold/brown accent */
+  margin: 0.5rem auto;
+}
+
+/* Content Card Placement and Overlap */
+.about-content-card-overlay {
+  /* No specific styles needed for position here, handled by Tailwind classes in JS */
+}
+
+.about-content-card {
+  @apply bg-white p-8 md:p-10 border border-[#e9e8e7] rounded-xl shadow-lg;
+  /* Additional custom overrides can go here */
+  position: relative;
+  z-index: 2; /* Ensure it's above everything */
+}
+
+.about-content-card p {
+  @apply mb-6 text-sm md:text-base text-[#554434] leading-relaxed;
+}
+
+/* Stats Grid with Tailwind and custom color */
+.about-stats-grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 mt-8 border-t border-[#e9e8e7];
+}
+
+.about-stat-item {
+  @apply bg-[#f7f6f5] p-5 rounded-lg border border-[#e9e8e7] text-center flex flex-col items-center;
+}
+
+.about-stat-number {
+  @apply block text-3xl font-bold text-[#8b5000] mb-2;
+}
+
+/* Optional Custom Media Query for Title Font Size if needed beyond Tailwind */
+@media (min-width: 768px) {
+  .about-title-hero {
+    font-size: 3rem;
+  }
 }
