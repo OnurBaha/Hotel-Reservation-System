@@ -10,10 +10,18 @@ import LoginModal from "./components/LoginModal";
 import Footer from "./components/Footer";
 import Contact from "./components/Contact";
 import { UserProvider } from "./context/authContext";
+import {MOCK_ROOMS, MOCK_CATEGORIES} from "./roomsMock"
 
 function AppContent() {
   const [view, setView] = useState("home");
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [rooms, setRooms] = useState(MOCK_ROOMS);
+  const [selectedRoom, setSelectedRoom] = useState(null);
+
+  const handleRoomClick = (room) =>{
+    setSelectedRoom(room);
+    setView('detail')
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -23,8 +31,8 @@ function AppContent() {
 
       <main className="flex-grow">
         {view === "home" && <Home setView={setView} />}
-        {view === "rooms" && <Rooms setView={setView} />}
-        {view === "detail" && <RoomDetail setView={setView} />}
+        {view === "rooms" && <Rooms rooms={rooms} categories={MOCK_CATEGORIES} onRoomClick={handleRoomClick} />}
+        {view === "detail" && <RoomDetail setView={setView} room={selectedRoom} />}
         {view === "booking" && <Booking setView={setView} />}
         {view === "about" && <About />}
         {view === 'contact' && <Contact setView={setView} />}

@@ -85,7 +85,7 @@ export const MOCK_ROOMS = [
     category: "Kral Dairesi",
     rating: 5.0,
     ratingCount: 14,
-    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80",
+    image: "https://www.alvistravel.com/images/hotel/40637_b.jpg",
     description: "Tamamen izole, kendine ait özel iskelesi, helikopter pisti erişimi ve sonsuzluk havuzuyla lüks tanımını yeniden yapan müstakil villa konsepti.",
     amenities: ["Sonsuzluk Havuzu", "Özel İskele", "Kişisel Aşçı", "7/24 Güvenlik", "Masaj Odası", "VIP Lounge"]
   },
