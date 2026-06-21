@@ -84,9 +84,14 @@ export default function Rooms({ rooms, categories, onRoomClick }) {
             <div className="checkbox-list">
               {[
                 { id: "wifi", label: "Ücretsiz Wi-Fi", value: "Ücretsiz Wi-Fi" },
+                { id: "klima", label: "Klima", value: "Klima" },
+                { id: "minibar", label: "Minibar", value: "Minibar" },
                 { id: "sea", label: "Deniz Manzarası", value: "Deniz Manzarası" },
                 { id: "pool", label: "Özel Havuz", value: "Özel Havuz" },
-                { id: "jacuzzi", label: "Jakuzi", value: "Jakuzi" }
+                { id: "jacuzzi", label: "Jakuzi", value: "Jakuzi" },
+                { id: "teras", label: "Geniş Teras", value: "Geniş Teras" },
+                { id: "balkon", label: "Balkon", value: "Balkon" },
+                { id: "service", label: "7/24 Oda Servisi", value: "7/24 Oda Servisi" },
               ].map((amenity) => (
                 <label key={amenity.id} className="checkbox-label">
                   <input 
