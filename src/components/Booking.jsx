@@ -1,4 +1,45 @@
-function Booking({ setView }) {
+import { useState } from "react";
+
+function Booking({ setView, room }) {
+  const [checkInDate, setCheckInDate] = useState("2026-07-10");
+  const [checkOutDate, setCheckOutDate] = useState("2026-07-17");
+  const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
+
+  if (!room) {
+    return (
+      <div className="max-w-5xl mx-auto px-6 py-12 text-center">
+        <p className="text-gray-500 mb-4">Rezervasyon yapılacak oda seçilmedi.</p>
+        <button onClick={() => setView('rooms')} className="btn-back mx-auto">
+          ← Odaları Listele
+        </button>
+      </div>
+    );
+  }
+
+
+
+  const checkIn = new Date(checkInDate);
+  const checkOut = new Date(checkOutDate);
+  const timeDifference = checkOut.getTime() - checkIn.getTime();
+  
+  const calculatedNights = Math.ceil(timeDifference / (1000 * 3600 * 24));
+  const nights = calculatedNights > 0 ? calculatedNights : 1;
+
+  const baseRoomPrice = room.price; 
+  const normalAdultPrice = baseRoomPrice / 2;
+  
+  const extraAdultCount = adults > 2 ? adults - 2 : 0;
+  const totalExtraAdultCost = extraAdultCount * normalAdultPrice;
+  
+  const singleChildPrice = normalAdultPrice * 0.25;
+  const totalChildCost = children * singleChildPrice;
+  
+  const dynamicPricePerNight = baseRoomPrice + totalExtraAdultCost + totalChildCost;
+
+  const totalAccommodation = dynamicPricePerNight * nights;
+  const grandTotal = totalAccommodation;
+
   return (
     <div className="max-w-5xl mx-auto px-6 py-12 animate-fade-in">
       <h1 className="booking-page-title">Rezervasyon Aşaması</h1>

@@ -37,7 +37,7 @@ function AppContent() {
         {view === "home" && <Home setView={setView} onRoomClick={handleRoomClick}/>}
         {view === "rooms" && <Rooms rooms={rooms} categories={MOCK_CATEGORIES} onRoomClick={handleRoomClick} />}
         {view === "detail" && <RoomDetail setView={setView} room={selectedRoom} />}
-        {view === "booking" && <Booking setView={setView} />}
+        {view === "booking" && <Booking setView={setView} room={selectedRoom}/>}
         {view === "about" && <About />}
         {view === 'contact' && <Contact setView={setView} />}
       </main>
