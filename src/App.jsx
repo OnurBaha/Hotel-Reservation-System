@@ -30,13 +30,12 @@ function AppContent() {
       <Navbar setView={setView} />
 
       <main className="flex-grow">
-        {view === "home" && <Home setView={setView} />}
+        {view === "home" && <Home setView={setView} onRoomClick={handleRoomClick}/>}
         {view === "rooms" && <Rooms rooms={rooms} categories={MOCK_CATEGORIES} onRoomClick={handleRoomClick} />}
         {view === "detail" && <RoomDetail setView={setView} room={selectedRoom} />}
         {view === "booking" && <Booking setView={setView} />}
         {view === "about" && <About />}
         {view === 'contact' && <Contact setView={setView} />}
-        
       </main>
 
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
