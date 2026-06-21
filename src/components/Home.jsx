@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { MOCK_ROOMS } from '../roomsMock'; 
 
-function Home({ setView }) {
-  // 1. Bugünün tarihini YYYY-MM-DD formatında dinamik olarak alıyoruz
+function Home({ setView, onRoomClick }) {
   const getTodayString = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -10,7 +10,6 @@ function Home({ setView }) {
     return `${year}-${month}-${day}`;
   };
 
-  // 2. Verilen tarihten 1 gün sonrasını YYYY-MM-DD formatında hesaplayan yardımcı fonksiyon
   const getNextDayString = (dateString) => {
     const date = new Date(dateString);
     date.setDate(date.getDate() + 1);
@@ -22,25 +21,22 @@ function Home({ setView }) {
 
   const todayStr = getTodayString();
 
-  // State'ler: Varsayılan olarak Giriş = Bugün, Çıkış = Yarın ayarlanıyor
   const [checkInDate, setCheckInDate] = useState(todayStr);
   const [checkOutDate, setCheckOutDate] = useState(getNextDayString(todayStr));
 
-  // Giriş tarihi değiştiğinde tetiklenecek fonksiyon
   const handleCheckInChange = (e) => {
     const newCheckIn = e.target.value;
     setCheckInDate(newCheckIn);
 
-    // Eğer yeni giriş tarihi, mevcut çıkış tarihine eşit veya sonrasındaysa,
-    // çıkış tarihini otomatik olarak yeni giriş tarihinin 1 gün sonrasına çekiyoruz.
     if (new Date(newCheckIn) >= new Date(checkOutDate)) {
       setCheckOutDate(getNextDayString(newCheckIn));
     }
   };
 
+  const featuredRooms = MOCK_ROOMS.slice(0, 3);
+
   return (
     <div className="animate-fadeIn">
-      {/* Hero Banner */}
       <div
         className="hero-banner"
         style={{
@@ -58,35 +54,28 @@ function Home({ setView }) {
         </div>
       </div>
 
-      {/* Arama Paneli */}
       <div className="search-panel-wrapper -mt-12 relative z-10 px-6">
         <div className="search-panel">
-          
-          {/* Giriş Tarihi */}
           <div className="search-group">
             <label className="search-label">Giriş Tarihi</label>
             <input
               type="date"
               value={checkInDate}
-              min={todayStr} /* Bugünden öncesi seçilemez */
+              min={todayStr}
               onChange={handleCheckInChange}
               className="search-input py-2"
             />
           </div>
-
-          {/* Çıkış Tarihi */}
           <div className="search-group">
             <label className="search-label">Çıkış Tarihi</label>
             <input
               type="date"
               value={checkOutDate}
-              min={getNextDayString(checkInDate)} /* Giriş tarihinden öncesi ve giriş günü seçilemez, en erken 1 gün sonrası */
+              min={getNextDayString(checkInDate)}
               onChange={(e) => setCheckOutDate(e.target.value)}
               className="search-input py-2"
             />
           </div>
-
-          {/* Yetişkin Sayısı */}
           <div className="search-group">
             <label className="search-label">Yetişkin Sayısı</label>
             <div className="search-select-container">
@@ -99,8 +88,6 @@ function Home({ setView }) {
               <span className="search-select-icon">▼</span>
             </div>
           </div>
-
-          {/* Çocuk Sayısı */}
           <div className="search-group">
             <label className="search-label">Çocuk Sayısı</label>
             <div className="search-select-container">
@@ -113,7 +100,6 @@ function Home({ setView }) {
               <span className="search-select-icon">▼</span>
             </div>
           </div>
-
           <div className="search-btn-wrapper">
             <button onClick={() => setView("rooms")} className="btn-search">
               Oda Bul
@@ -122,7 +108,6 @@ function Home({ setView }) {
         </div>
       </div>
 
-      {/* --- OTEL TANITIM BÖLÜMÜ --- */}
       <div className="bg-white border-b border-[#e9e8e7]/30">
         <div className="intro-section-wrapper">
           <div className="intro-content-side">
@@ -157,7 +142,6 @@ function Home({ setView }) {
         </div>
       </div>
 
-      {/* Öne Çıkan Odalar Bölümü */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="section-title-wrapper">
           <h2 className="section-title">Öne Çıkan Odalarımız</h2>
@@ -167,124 +151,55 @@ function Home({ setView }) {
         </div>
 
         <div className="rooms-grid-3">
-          {/* Deluxe Oda */}
-          <div className="room-card">
-            <div className="room-card-img-wrapper">
-              <img 
-                src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80" 
-                alt="Oda" 
-                className="room-card-img" 
-              />
-              <span className="room-badge">Deluxe</span>
-            </div>
-            <div className="room-card-body">
-              <div>
-                <div className="room-rating">
-                  ★ 4.9 <span className="text-gray-400 font-normal text-xs">(124 değerlendirme)</span>
-                </div>
-                <h3 className="room-title">Deluxe Deniz Manzaralı Oda</h3>
-                <p className="room-desc">
-                  Akdeniz'in büyüleyici maviliğine açılan pencereleri, özel
-                  balkonu ve modern tasarımıyla konforlu bir konaklama deneyimi.
-                </p>
-                <div className="room-tags-wrapper">
-                  <span className="room-tag">Wi-Fi</span>
-                  <span className="room-tag">Deniz Manzarası</span>
-                  <span className="room-tag">Jakuzi</span>
-                </div>
+          {featuredRooms.map((room) => (
+            <div key={room.id} className="room-card">
+              <div className="room-card-img-wrapper">
+                <img 
+                  src={room.image} 
+                  alt={room.title} 
+                  className="room-card-img" 
+                />
+                <span className="room-badge">{room.category}</span>
               </div>
-              <div className="room-card-footer">
-                <span className="room-price">
-                  ₺4,500 <span className="text-xs text-gray-500 font-normal">/ gece</span>
-                </span>
-                <button onClick={() => setView("detail")} className="btn-action-md">
-                  Detaylar
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Suite Oda */}
-          <div className="room-card">
-            <div className="room-card-img-wrapper">
-              <img
-                src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80"
-                alt="Oda"
-                className="room-card-img"
-              />
-              <span className="room-badge">Suite</span>
-            </div>
-            <div className="room-card-body">
-              <div>
-                <div className="room-rating">
-                  ★ 4.8 <span className="text-gray-400 font-normal text-xs">(86 değerlendirme)</span>
+              <div className="room-card-body">
+                <div>
+                  <div className="room-rating">
+                    ★ {room.rating} <span className="text-gray-400 font-normal text-xs">({room.ratingCount} değerlendirme)</span>
+                  </div>
+                  <h3 className="room-title">{room.title}</h3>
+                  <p className="room-desc line-clamp-3">
+                    {room.description}
+                  </p>
+                  <div className="room-tags-wrapper">
+                    {room.amenities.slice(0, 3).map((amenity, idx) => (
+                      <span key={idx} className="room-tag">{amenity}</span>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="room-title">Premium Orman Teraslı Süit</h3>
-                <p className="room-desc">
-                  Doğanın kucağında, geniş teras alanı ve özel güneşlenme
-                  alanlarıyla donatılmış, huzur arayanlar için tasarlanmış özel
-                  süit.
-                </p>
-                <div className="room-tags-wrapper">
-                  <span className="room-tag">Geniş Teras</span>
-                  <span className="room-tag">Kahve Makinesi</span>
-                  <span className="room-tag">Doğa Manzarası</span>
+                <div className="room-card-footer">
+                  <span className="room-price">
+                    ₺{room.price.toLocaleString('tr-TR')} <span className="text-xs text-gray-500 font-normal">/ gece</span>
+                  </span>
+                  
+                  <button 
+                    onClick={() => {
+                      onRoomClick(room);
+                      setView("detail");
+                    }} 
+                    className="btn-action-md"
+                  >
+                    Detaylar
+                  </button>
+                  
                 </div>
               </div>
-              <div className="room-card-footer">
-                <span className="room-price">
-                  ₺6,200 <span className="text-xs text-gray-500 font-normal">/ gece</span>
-                </span>
-                <button onClick={() => setView("detail")} className="btn-action-md">
-                  Detaylar
-                </button>
-              </div>
             </div>
-          </div>
-
-          {/* Kral Dairesi */}
-          <div className="room-card">
-            <div className="room-card-img-wrapper">
-              <img
-                src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80"
-                alt="Oda"
-                className="room-card-img"
-              />
-              <span className="room-badge">Kral Dairesi</span>
-            </div>
-            <div className="room-card-body">
-              <div>
-                <div className="room-rating">
-                  ★ 5.0 <span className="text-gray-400 font-normal text-xs">(32 değerlendirme)</span>
-                </div>
-                <h3 className="room-title">Eşsiz Kral Dairesi (Presidential)</h3>
-                <p className="room-desc">
-                  Özel havuz erişimi, panoramik manzara, geniş toplantı ve yaşam
-                  alanı ile tamamen size özel bir saray konforu.
-                </p>
-                <div className="room-tags-wrapper">
-                  <span className="room-tag">Özel Havuz</span>
-                  <span className="room-tag">Kişisel Uşak</span>
-                  <span className="room-tag">Sauna</span>
-                </div>
-              </div>
-              <div className="room-card-footer">
-                <span className="room-price">
-                  ₺16,200 <span className="text-xs text-gray-500 font-normal">/ gece</span>
-                </span>
-                <button onClick={() => setView("detail")} className="btn-action-md">
-                  Detaylar
-                </button>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Hizmetlerimiz Bölümü */}
       <div className="border-t border-[#e9e8e7]/40 bg-[#fefdfc]">
         <div className="services-section-wrapper">
-          {/* Sol Başlık Alanı */}
           <div className="services-title-side">
             <span className="services-tag">Luxe Vista</span>
             <h2 className="services-main-title">Hizmetler</h2>
@@ -293,41 +208,31 @@ function Home({ setView }) {
             </p>
           </div>
 
-          {/* Sağ İkon Grid Alanı */}
           <div className="services-grid-side">
-            {/* Engelli Dostu */}
             <div className="service-item-card">
               <div className="service-item-icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="4" r="2"/><path d="M10 13H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h4v4"/><path d="M17 14h-3l-2-3H8"/><path d="M18 19H13v-5"/></svg>
               </div>
               <span className="service-item-name">Engelli Dostu</span>
             </div>
-
-            {/* Otopark */}
             <div className="service-item-card">
               <div className="service-item-icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/></svg>
               </div>
               <span className="service-item-name">Otopark</span>
             </div>
-
-            {/* Oda Servisi */}
             <div className="service-item-card">
               <div className="service-item-icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 4h20v2H2z"/><path d="M4 6v13a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V6"/><path d="M9 11h6"/><path d="M9 15h6"/></svg>
               </div>
               <span className="service-item-name">Oda Servisi</span>
             </div>
-
-            {/* Kadınlar Plajı ve Havuzu */}
             <div className="service-item-card">
               <div className="service-item-icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 10a4 4 0 0 1 8 0M14 10a4 4 0 0 1 8 0"/><path d="M2 14a4 4 0 0 1 8 0M14 14a4 4 0 0 1 8 0"/><path d="M2 18a4 4 0 0 1 8 0M14 18a4 4 0 0 1 8 0"/></svg>
               </div>
               <span className="service-item-name">Kadınlar Plajı ve Havuzu</span>
             </div>
-
-            {/* Fiber İnternet (Öne Çıkan Kart) */}
             <div className="service-item-card-highlight">
               <div className="service-item-icon-highlight">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13a10 10 0 0 1 14 0"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M12 20h.01"/></svg>
@@ -335,8 +240,6 @@ function Home({ setView }) {
               <span className="service-item-name-highlight">Fiber İnternet</span>
               <p className="service-item-sub-highlight">1000mb fiber internet alt yapısı</p>
             </div>
-
-            {/* Breakfast */}
             <div className="service-item-card">
               <div className="service-item-icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" x2="6" y1="2" y2="4"/><line x1="10" x2="10" y1="2" y2="4"/><line x1="14" x2="14" y1="2" y2="4"/></svg>
