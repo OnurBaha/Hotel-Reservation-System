@@ -36,6 +36,7 @@ function AppContent() {
         {view === "booking" && <Booking setView={setView} />}
         {view === "about" && <About />}
         {view === 'contact' && <Contact setView={setView} />}
+        
       </main>
 
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />

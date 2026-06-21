@@ -5,7 +5,6 @@ function Footer({ setView }) {
     <footer className="site-footer-premium">
       <div className="footer-grid-container">
         
-        {/* Marka Tanıtımı */}
         <div>
           <h3 className="footer-brand-title">Luxe Vista Resort</h3>
           <p className="footer-brand-desc">
@@ -13,7 +12,6 @@ function Footer({ setView }) {
           </p>
         </div>
 
-        {/* Hızlı Menü Bağlantıları */}
         <div>
           <h4 className="footer-section-title">Hızlı Menü</h4>
           <ul className="footer-menu-list">
@@ -32,7 +30,6 @@ function Footer({ setView }) {
           </ul>
         </div>
 
-        {/* Bülten Aboneliği */}
         <div>
           <h4 className="footer-section-title">Bülten Aboneliği</h4>
           <p className="footer-newsletter-text">
@@ -50,7 +47,6 @@ function Footer({ setView }) {
 
       </div>
 
-      {/* Telif Hakkı Çubuğu */}
       <div className="footer-copyright-bar">
         © 2026 Luxe Vista Resort. All rights reserved.
       </div>

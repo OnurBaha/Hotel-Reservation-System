@@ -5,9 +5,6 @@ function About() {
   return (
     <div className="animate-fadeIn relative">
       
-      {/* Değişen Kısım: Sınıf adını 'about-hero-container-under-nav' yaptık.
-        Böylece görsel menülerin arkasına kayacak.
-      */}
       <div className="about-hero-container-under-nav animate-fadeIn">
         <img 
           src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1920&q=80" 
@@ -23,7 +20,6 @@ function About() {
         </div>
       </div>
 
-      {/* İçerik Kartı */}
       <div className="about-content-card-overlay max-w-4xl mx-auto px-6 py-12 relative z-10 -mt-20 animate-fadeIn">
         <div className="about-content-card">
           <p>
