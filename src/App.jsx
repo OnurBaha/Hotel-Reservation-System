@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -17,6 +17,10 @@ function AppContent() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [rooms, setRooms] = useState(MOCK_ROOMS);
   const [selectedRoom, setSelectedRoom] = useState(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [view])
 
   const handleRoomClick = (room) =>{
     setSelectedRoom(room);
