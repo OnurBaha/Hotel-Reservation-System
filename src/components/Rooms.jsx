@@ -3,9 +3,31 @@ import RoomGrid from './RoomGrid'
 
 export default function Rooms({ rooms, categories, onRoomClick }) {
   const [selectedCategory, setSelectedCategory] = useState("Tümü")
+  const [sortBy, setSortBy] = useState("Önerilen");
+  const [maxPrice, setMaxPrice] = useState(25000);
+  const [selectedAmenities, setSelectedAmenities] = useState([]);
+
+  const handleAmenityChange = (amenityName) => {
+    if(selectedAmenities.includes(amenityName)){
+      setSelectedAmenities(selectedAmenities.filter(item => item !== amenityName))
+    }else {
+      setSelectedAmenities([...selectedAmenities, amenityName])
+    }
+  }
 
   const filteredRooms = rooms.filter((room) => {
-    return selectedCategory === "Tümü" || room.category === selectedCategory
+    const matchesCategory = selectedCategory === "Tümü" || room.category === selectedCategory
+
+    const matchesPrice = room.price <= maxPrice 
+
+    const matchesAmenities = selectedAmenities.every(amenity => room.amenities.includes(amenity))
+
+    return matchesCategory && matchesPrice && matchesAmenities
+  }).sort((a,b) => {
+    if(sortBy === "Fiyat: Düşükten Yükseğe") return a.price - b.price
+    if(sortBy === "Fiyat: Yüksekten Düşüğe") return b.price - a.price
+    if(sortBy === "En Yüksek Puan") return b.rating - a.rating 
+    return 0 
   })
 
   return (
@@ -31,7 +53,7 @@ export default function Rooms({ rooms, categories, onRoomClick }) {
           <div>
             <h3 className="sidebar-section-title">Filtrele & Sırala</h3>
             <label className="search-label">Sıralama</label>
-            <select className="search-input-sm">
+            <select className="search-input-sm" value={sortBy} onChange={(e)=> setSortBy(e.target.value)}>
               <option>Önerilen</option>
               <option>Fiyat: Düşükten Yükseğe</option>
               <option>Fiyat: Yüksekten Düşüğe</option>
@@ -40,12 +62,15 @@ export default function Rooms({ rooms, categories, onRoomClick }) {
           </div>
 
           <div>
-            <label className="search-label">Fiyat Aralığı (Gecelik)</label>
+            <label className="search-label">
+              Maksimum Fiyat: <span className="text-[#8b5000] font-bold">₺{maxPrice.toLocaleString('tr-TR')}</span>
+            </label>
             <input
               type="range"
               min="2000"
               max="25000"
-              defaultValue="15000"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(Number(e.target.value))}
               className="range-input"
             />
             <div className="flex justify-between text-xs text-[#554434] mt-1 font-medium">
@@ -57,22 +82,22 @@ export default function Rooms({ rooms, categories, onRoomClick }) {
           <div>
             <label className="search-label !mb-3">Oda Özellikleri</label>
             <div className="checkbox-list">
-              <label className="checkbox-label">
-                <input type="checkbox" defaultChecked className="checkbox-input" />{" "}
-                <span>Ücretsiz Wi-Fi</span>
-              </label>
-              <label className="checkbox-label">
-                <input type="checkbox" className="checkbox-input" />{" "}
-                <span>Deniz Manzarası</span>
-              </label>
-              <label className="checkbox-label">
-                <input type="checkbox" className="checkbox-input" />{" "}
-                <span>Özel Havuz</span>
-              </label>
-              <label className="checkbox-label">
-                <input type="checkbox" className="checkbox-input" />{" "}
-                <span>Jakuzi</span>
-              </label>
+              {[
+                { id: "wifi", label: "Ücretsiz Wi-Fi", value: "Ücretsiz Wi-Fi" },
+                { id: "sea", label: "Deniz Manzarası", value: "Deniz Manzarası" },
+                { id: "pool", label: "Özel Havuz", value: "Özel Havuz" },
+                { id: "jacuzzi", label: "Jakuzi", value: "Jakuzi" }
+              ].map((amenity) => (
+                <label key={amenity.id} className="checkbox-label">
+                  <input 
+                    type="checkbox" 
+                    className="checkbox-input"
+                    checked={selectedAmenities.includes(amenity.value)}
+                    onChange={() => handleAmenityChange(amenity.value)}
+                  />{" "}
+                  <span>{amenity.label}</span>
+                </label>
+              ))}
             </div>
           </div>
         </div>
