@@ -11,6 +11,9 @@ function Navbar({ setView }) {
         <button onClick={() => setView('about')} className="nav-btn">
           Hakkımızda
         </button>
+        <button onClick={() => setView('contact')} className="nav-btn">
+          İletişim
+        </button>
       </div>
     </nav>
   );

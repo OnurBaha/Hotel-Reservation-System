@@ -8,6 +8,7 @@ import Booking from "./components/Booking";
 import About from "./components/About";
 import LoginModal from "./components/LoginModal";
 import Footer from "./components/Footer";
+import Contact from "./components/Contact";
 import { UserProvider } from "./context/authContext";
 
 function AppContent() {
@@ -26,6 +27,7 @@ function AppContent() {
         {view === "detail" && <RoomDetail setView={setView} />}
         {view === "booking" && <Booking setView={setView} />}
         {view === "about" && <About />}
+        {view === 'contact' && <Contact setView={setView} />}
       </main>
 
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />

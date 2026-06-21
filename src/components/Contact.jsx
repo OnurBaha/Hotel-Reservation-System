@@ -1,0 +1,102 @@
+import React from 'react';
+
+function Contact() {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("Mesajınız başarıyla iletildi!");
+  };
+
+  return (
+    <div className="animate-fadeIn">
+      
+      {/* --- GÖRSEL VE ARKASINDA KALAN BAŞLIK ALANI (HERO) --- */}
+      <div className="contact-hero-container animate-fadeIn">
+        <img 
+          src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=80" 
+          alt="Contact Hero" 
+          className="contact-hero-img" 
+        />
+        <div className="contact-hero-overlay">
+          <div className="contact-hero-content">
+            <span className="hero-tag">Luxe Vista Resort</span>
+            <h1 className="contact-main-title !text-white">Bize Ulaşın</h1>
+            <p className="contact-subtitle !text-white/90">
+              Sorularınız, rezervasyon talepleriniz veya iş başvurularınız için bizimle iletişime 
+              geçmekten çekinmeyin. Size yardımcı olmaktan memnuniyet duyarız.
+            </p>
+            <div className="about-decorator mx-auto"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* --- ALT BÖLÜM (BİLGİ KARTLARI, HARİTA VE FORM) --- */}
+      <div className="contact-body-content">
+        
+        {/* 3'lü Bilgi Kartları */}
+        <div className="contact-cards-grid">
+          <div className="contact-info-card">
+            <div className="contact-card-icon-wrapper">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10h18M3 14h18M3 18h18M3 6h18"/></svg>
+            </div>
+            <h3 className="contact-card-title">Rezervasyon</h3>
+            <p className="contact-card-desc">Oda ayırtmak için bizimle e-posta üzerinden iletişime geçebilirsiniz.</p>
+            <a href="mailto:reservations@luxevista.com" className="contact-card-link">reservations@luxevista.com</a>
+          </div>
+
+          <div className="contact-info-card">
+            <div className="contact-card-icon-wrapper">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+            </div>
+            <h3 className="contact-card-title">Sorularınız</h3>
+            <p className="contact-card-desc">Genel sorularınız için bize yazmaktan çekinmeyin.</p>
+            <a href="mailto:info@luxevista.com" className="contact-card-link">info@luxevista.com</a>
+          </div>
+
+          <div className="contact-info-card">
+            <div className="contact-card-icon-wrapper">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <h3 className="contact-card-title">İş İlanları</h3>
+            <p className="contact-card-desc">Kariyer fırsatlarını değerlendirmek için CV'nizi bekliyoruz.</p>
+            <a href="mailto:careers@luxevista.com" className="contact-card-link">careers@luxevista.com</a>
+          </div>
+        </div>
+
+        <div className="contact-bottom-bg">
+          <div className="contact-bottom-grid">
+            {/* Harita */}
+            <div className="contact-map-side">
+              <iframe 
+                title="Luxe Vista Location"
+                className="contact-map-iframe"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12196.843663152643!2d30.648356399999998!3d36.88480435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c39aa92f39d2c3%3A0x40a049d9a0d9a0!2sAntalya!5e0!3m2!1str!2str!4v1718870000000!5m2!1str!2str"
+                allowFullScreen="" loading="lazy"></iframe>
+              <div className="contact-address-box">
+                <h4 className="contact-address-title">Luxe Vista Resort</h4>
+                <p className="contact-address-text">123 Coastal Drive, Antalya, Türkiye</p>
+              </div>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="contact-form-card">
+              <h3 className="contact-form-title">Bize Mesaj Gönderin</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input type="text" placeholder="Adınız Soyadınız" className="contact-form-input" required />
+                <input type="email" placeholder="E-posta Adresiniz" className="contact-form-input" required />
+              </div>
+              <select className="search-select-override !bg-[#f7f6f5] !border-[#e9e8e7]">
+                <option>Rezervasyon Talebi</option>
+                <option>Genel Bilgi</option>
+                <option>Kariyer</option>
+              </select>
+              <textarea placeholder="Mesajınız..." className="contact-form-textarea" required></textarea>
+              <button type="submit" className="btn-contact-submit">MESAJ GÖNDER</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Contact;
