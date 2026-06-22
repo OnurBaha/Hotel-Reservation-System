@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { getTodayString } from "../utils/dateUtils";
 
-export default function Booking({ setView, room }) {
-  const todayStr = "2026-06-21";
+export default function Booking({ setView, room, searchParams }) {
+  const todayStr = getTodayString();
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
-  const [liveCheckIn, setLiveCheckIn] = useState(todayStr);
-  const [liveCheckOut, setLiveCheckOut] = useState("2026-06-28");
-  const [liveAdults, setLiveAdults] = useState(2);
-  const [liveChildren, setLiveChildren] = useState(0);
+  const [liveCheckIn, setLiveCheckIn] = useState(searchParams.checkIn);
+  const [liveCheckOut, setLiveCheckOut] = useState(searchParams.checkOut || getTodayString());
+  const [liveAdults, setLiveAdults] = useState(Number(searchParams.adults));
+  const [liveChildren, setLiveChildren] = useState(Number(searchParams.children));
 
   const {
     register,
@@ -41,7 +42,6 @@ export default function Booking({ setView, room }) {
   const nights = Math.max(1, Math.ceil(timeDiff / (1000 * 3600 * 24)));
 
   const singleAdultPrice = room.price / 2;
-
   const extraAdultCost = Math.max(0, liveAdults - 2) * singleAdultPrice;
   const childCost = liveChildren * (singleAdultPrice * 0.25);
 
@@ -51,7 +51,6 @@ export default function Booking({ setView, room }) {
 
   const onSubmit = (data) => {
     console.log("Rezervasyon ve Kart Bilgileri Başarıyla Toplandı:", data);
-
     setIsSuccessModalOpen(true);
 
     setTimeout(() => {
@@ -304,7 +303,6 @@ export default function Booking({ setView, room }) {
           </div>
         </div>
 
-        {/* SAĞ PANEL: Gerçek Zamanlı Hesaplanan Özelleştirilmiş Özet */}
         <div className="booking-summary-side">
           <h2 className="summary-title">Rezervasyon Detayları</h2>
           <img src={room.image} alt={room.title} className="summary-img" />

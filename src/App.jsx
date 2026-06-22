@@ -10,22 +10,28 @@ import LoginModal from "./components/LoginModal";
 import Footer from "./components/Footer";
 import Contact from "./components/Contact";
 import { UserProvider } from "./context/authContext";
-import {MOCK_ROOMS, MOCK_CATEGORIES} from "./roomsMock"
+import { MOCK_ROOMS, MOCK_CATEGORIES } from "./roomsMock";
+import { getTodayString, getNextDayString } from "./utils/dateUtils";
 
 function AppContent() {
   const [view, setView] = useState("home");
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [rooms, setRooms] = useState(MOCK_ROOMS);
   const [selectedRoom, setSelectedRoom] = useState(null);
+  const [searchParams, setSearchParams] = useState({
+    checkIn: getTodayString(),
+    checkOut: getNextDayString(getTodayString()),
+    adults: "2",
+    children: "0"
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [view])
+  }, [view]);
 
-  const handleRoomClick = (room) =>{
+  const handleRoomClick = (room) => {
     setSelectedRoom(room);
-    setView('detail')
-  }
+    setView("detail");
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -34,12 +40,25 @@ function AppContent() {
       <Navbar setView={setView} />
 
       <main className="flex-grow">
-        {view === "home" && <Home setView={setView} onRoomClick={handleRoomClick}/>}
-        {view === "rooms" && <Rooms rooms={rooms} categories={MOCK_CATEGORIES} onRoomClick={handleRoomClick} />}
-        {view === "detail" && <RoomDetail setView={setView} room={selectedRoom} />}
-        {view === "booking" && <Booking setView={setView} room={selectedRoom}/>}
+        {view === "home" && (
+          <Home setView={setView} onRoomClick={handleRoomClick} searchParams={searchParams} setSearchParams={setSearchParams} />
+        )}
+        {view === "rooms" && (
+          <Rooms
+            rooms={MOCK_ROOMS}
+            categories={MOCK_CATEGORIES}
+            onRoomClick={handleRoomClick}
+            searchParams={searchParams}
+          />
+        )}
+        {view === "detail" && (
+          <RoomDetail setView={setView} room={selectedRoom} />
+        )}
+        {view === "booking" && (
+          <Booking setView={setView} room={selectedRoom} searchParams={searchParams}/>
+        )}
         {view === "about" && <About />}
-        {view === 'contact' && <Contact setView={setView} />}
+        {view === "contact" && <Contact setView={setView} />}
       </main>
 
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />

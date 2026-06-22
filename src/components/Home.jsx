@@ -1,36 +1,34 @@
-import React, { useState } from 'react';
 import { MOCK_ROOMS } from '../roomsMock'; 
+import { getTodayString, getNextDayString } from "../utils/dateUtils";
 
-function Home({ setView, onRoomClick }) {
-  const getTodayString = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-
-  const getNextDayString = (dateString) => {
-    const date = new Date(dateString);
-    date.setDate(date.getDate() + 1);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
+function Home({ setView, searchParams, setSearchParams, onRoomClick }) {
 
   const todayStr = getTodayString();
 
-  const [checkInDate, setCheckInDate] = useState(todayStr);
-  const [checkOutDate, setCheckOutDate] = useState(getNextDayString(todayStr));
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSearchParams(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const handleCheckInChange = (e) => {
     const newCheckIn = e.target.value;
-    setCheckInDate(newCheckIn);
+    
+    setSearchParams(prev => {
+      const updatedParams = { ...prev, checkIn: newCheckIn };
+      
+      if (new Date(newCheckIn) >= new Date(prev.checkOut)) {
+        updatedParams.checkOut = getNextDayString(newCheckIn);
+      }
+      return updatedParams;
+    });
+  };
 
-    if (new Date(newCheckIn) >= new Date(checkOutDate)) {
-      setCheckOutDate(getNextDayString(newCheckIn));
-    }
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setView("rooms");
   };
 
   const featuredRooms = MOCK_ROOMS.slice(0, 3);
@@ -55,12 +53,13 @@ function Home({ setView, onRoomClick }) {
       </div>
 
       <div className="search-panel-wrapper -mt-12 relative z-10 px-6">
-        <div className="search-panel">
+        <form onSubmit={handleSearchSubmit} className="search-panel">
           <div className="search-group">
             <label className="search-label">Giriş Tarihi</label>
             <input
               type="date"
-              value={checkInDate}
+              name="checkIn"
+              value={searchParams.checkIn}
               min={todayStr}
               onChange={handleCheckInChange}
               className="search-input py-2"
@@ -70,16 +69,22 @@ function Home({ setView, onRoomClick }) {
             <label className="search-label">Çıkış Tarihi</label>
             <input
               type="date"
-              value={checkOutDate}
-              min={getNextDayString(checkInDate)}
-              onChange={(e) => setCheckOutDate(e.target.value)}
+              name="checkOut"
+              value={searchParams.checkOut}
+              min={getNextDayString(searchParams.checkIn)}
+              onChange={handleInputChange}
               className="search-input py-2"
             />
           </div>
           <div className="search-group">
             <label className="search-label">Yetişkin Sayısı</label>
             <div className="search-select-container">
-              <select className="search-select-override" defaultValue="2">
+              <select 
+                name="adults"
+                value={searchParams.adults}
+                onChange={handleInputChange}
+                className="search-select-override"
+              >
                 <option value="1">1 Yetişkin</option>
                 <option value="2">2 Yetişkin</option>
                 <option value="3">3 Yetişkin</option>
@@ -91,7 +96,12 @@ function Home({ setView, onRoomClick }) {
           <div className="search-group">
             <label className="search-label">Çocuk Sayısı</label>
             <div className="search-select-container">
-              <select className="search-select-override" defaultValue="0">
+              <select 
+                name="children"
+                value={searchParams.children}
+                onChange={handleInputChange}
+                className="search-select-override"
+              >
                 <option value="0">Çocuk Yok</option>
                 <option value="1">1 Çocuk</option>
                 <option value="2">2 Çocuk</option>
@@ -101,11 +111,11 @@ function Home({ setView, onRoomClick }) {
             </div>
           </div>
           <div className="search-btn-wrapper">
-            <button onClick={() => setView("rooms")} className="btn-search">
+            <button type="submit" className="btn-search">
               Oda Bul
             </button>
           </div>
-        </div>
+        </form>
       </div>
 
       <div className="bg-white border-b border-[#e9e8e7]/30">
